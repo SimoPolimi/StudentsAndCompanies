@@ -1,0 +1,293 @@
+\documentclass[11pt,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Page margins, header and footer positions
+\usepackage{geometry}
+\geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=25mm,
+ right=25mm,
+ top=30mm,
+ bottom=25mm,
+ headsep=7mm
+}
+
+\interfootnotelinepenalty=10000
+
+% To display filling dots in the TOC for all entries
+\usepackage[titles]{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% Define new header and footer style
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\color{Gray}{\small{Bogdanovic Stefan, Rodari Simone, Pignataro Gabirele}}}
+\lfoot{\textcolor{Gray}{\small{Copyright © 2024, Bogdanovic Stefan, Rodari Simone, Pignataro Gabirele – All rights reserved}}}
+\rfoot{\textcolor{Gray}{\thepage}}
+\renewcommand{\headrulewidth}{0pt}
+
+% PACKAGES
+\usepackage{wasysym}
+\usepackage{pifont}
+\usepackage{minted}
+
+\newcommand{\supported}{\ding{52}\xspace}
+\newcommand{\unsupported}{\ding{55}\xspace}
+\newcommand{\partsupported}{\textcolor{black!40}{\ding{52}}\xspace}
+\newcommand{\lowsupported}{\textcolor{black!20}{\ding{52}}\xspace}
+\newcommand{\unknowsupported}{\textbf{?}\xspace}
+
+% Font: Times
+\usepackage{times}
+% Change monospaced font
+\renewcommand{\ttdefault}{lmtt}
+
+% Tables
+\usepackage{tabu}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\usepackage{longtable}
+\usepackage{float}
+
+% Landscape mode
+\usepackage{pdflscape}
+\usepackage{rotating}
+\usepackage{caption}
+
+% Make landscape mode be sensitive to even and odd pages
+\def\myrotate{\ifodd\c@page\else-\fi 90}
+\makeatletter
+\global\let\orig@begin@landscape=\landscape%
+\global\let\orig@end@landscape=\endlandscape%
+\gdef\@true{1}
+\gdef\@false{0}
+\gdef\landscape{%
+    \global\let\within@landscape=\@true%
+    \orig@begin@landscape%
+}%
+\gdef\endlandscape{%
+    \orig@end@landscape%
+    \global\let\within@landscape=\@false%
+}%
+\@ifpackageloaded{pdflscape}{%
+    \gdef\pdf@landscape@rotate{\PLS@Rotate}%
+}{
+    \gdef\pdf@landscape@rotate#1{}%
+}
+\let\latex@outputpage\@outputpage
+\def\@outputpage{
+    \ifx\within@landscape\@true%
+        \if@twoside%
+            \ifodd\c@page%
+                \gdef\LS@rot{\setbox\@outputbox\vbox{%
+                    \pdf@landscape@rotate{-90}%
+                    \hbox{\rotatebox{90}{\hbox{\rotatebox{180}{\box\@outputbox}}}}}%
+                }%
+            \else%
+                \gdef\LS@rot{\setbox\@outputbox\vbox{%
+                    \pdf@landscape@rotate{+90}%
+                    \hbox{\rotatebox{90}{\hbox{\rotatebox{0}{\box\@outputbox}}}}}%
+                }%
+            \fi%
+        \else%
+            \gdef\LS@rot{\setbox\@outputbox\vbox{%
+                \pdf@landscape@rotate{+90}%
+                \hbox{\rotatebox{90}{\hbox{\rotatebox{0}{\box\@outputbox}}}}}%
+            }%
+        \fi%
+    \fi%
+    \latex@outputpage%
+}
+\makeatother
+
+% Graphics
+\usepackage{graphicx}
+\usepackage[dvipsnames, table]{xcolor}
+
+% Other
+\usepackage{ifthen}
+\usepackage{xspace}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage[pdftex, colorlinks]{hyperref}
+\newcommand{\comment}[1]{{\color{Black}$\blacktriangleright$ Comment: #1 $\blacktriangleleft$}}
+
+% Some utilities
+\input{util/highlight}
+\input{util/abbrev}
+
+% CUSTOM LISTS
+\usepackage{enumitem}
+
+\newlength{\goalmargin}
+\setlength{\goalmargin}{44pt}
+
+\newcommand{\goalitem}[1]{
+  \item[{[G\arabic{goalsi}.#1]}]
+}
+
+\newlist{goals}{enumerate}{1}
+\setlist[goals, 1]{
+  label = [G\arabic*],
+  leftmargin = \goalmargin,
+  align = left,
+  labelwidth= \goalmargin,
+  labelsep = 0pt
+}
+
+\newlist{w-phenomena}{enumerate}{1}
+\setlist[w-phenomena, 1]{
+  label= [WP\arabic*],
+  leftmargin = \goalmargin,
+  align = left,
+  labelwidth= \goalmargin,
+  labelsep = 0pt
+}
+
+\newlist{s-phenomena}{enumerate}{1}
+\setlist[s-phenomena, 1]{
+  label= [SP\arabic*],
+  leftmargin = \goalmargin,
+  align = left,
+  labelwidth= \goalmargin,
+  labelsep = 0pt
+}
+
+\newlist{requirements}{enumerate}{1}
+\setlist[requirements, 1]{
+  label= [R\arabic*],
+  leftmargin = \goalmargin,
+  align = left,
+  labelwidth= \goalmargin,
+  labelsep = 0pt
+}
+
+\newlist{domain-assumptions}{enumerate}{1}
+\setlist[domain-assumptions, 1]{
+  label= [D\arabic*],
+  leftmargin = \goalmargin,
+  align = left,
+  labelwidth= \goalmargin,
+  labelsep = 0pt
+}
+
+\newlist{use-case}{enumerate}{1}
+\setlist[use-case, 1]{
+label= [UC - \arabic*],
+  leftmargin = \goalmargin,
+  align = left,
+  labelwidth= \goalmargin,
+  labelsep = 0pt
+}
+
+% TABLE UTILS
+\newcommand{\uctab}[6]{
+\begin{tabular}{|m{3cm}|p{9cm}|}
+    \hline
+    Name & #1 \\
+    \hline
+    Actors & #2 \\
+    \hline
+    Entry condition & #3 \\
+    \hline
+    Event flow & #4 \\
+    \hline
+    Exit condition & #5 \\
+    \hline
+    Exception & #6 \\
+    \hline
+\end{tabular}
+}
+
+\newcommand{\reqmap}[1]{
+\begin{tabular}{|p{0.5\textwidth}|p{0.5\textwidth}|}
+    \hline
+    #1
+    \hline
+\end{tabular}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% TITLE PAGE
+\begin{titlepage}
+% LOGO
+{\begin{table}[t!]
+\centering
+\begin{tabu} to \textwidth { X[1.3,r,p] X[1.7,l,p] }
+\textcolor{Blue}
+{\textbf{\small{Bogdanovic Stefan, Rodari Simone, Pignataro Gabirele}}} & \includegraphics[scale=0.5]{Images/PolimiLogo}
+\end{tabu}
+\end{table}}~\\ [7cm]
+
+% TITLE 
+\begin{flushleft}
+{\textcolor{Blue}{\textbf{
+    \Huge{Students\&Companies} \\
+    \LARGE{Requirement Analysis and Specification Document}}}} \\ [1cm]
+\end{flushleft}
+\end{titlepage}
+
+% Define deliverable specific info
+\begin{table}[h!]
+\begin{tabu} to \textwidth { X[0.3,r,p] X[0.7,l,p] }
+\hline
+\textbf{Deliverable:} & RASD\\
+\textbf{Title:} & Students\&Companies \\
+\textbf{Authors:} & Bogdanovic Stefan, Rodari Simone, Pignataro Gabirele \\
+\textbf{Version:} & 1.0 \\ 
+\textbf{Date:} & 22-December-2024 \\
+\textbf{Download page:} & \href{https://github.com/SimoPolimi/RodariPignataroBogdanovic}{https://github.com/SimoPolimi/RodariPignataroBogdanovic} \\
+\textbf{Copyright:} & Copyright © 2024, Bogdanovic Stefan, Rodari Simone, Pignataro Gabirele – All rights reserved \\
+\hline
+\end{tabu}
+\end{table}
+
+\setcounter{page}{2}
+
+\newpage
+\addcontentsline{toc}{section}{Table of Contents}
+\tableofcontents
+\newpage
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+
+\clearpage
+{\color{Blue}{\section{Introduction}}}
+\label{sect:introduction}
+\input{Files/introduction}
+
+\clearpage
+{\color{Blue}{\section{Overall Description}}}
+\label{sect:overview}
+\input{Files/overview}
+
+\clearpage
+{\color{Blue}{\section{Specific Requirements}}}
+\label{sect:requirements}
+\input{Files/requirements}
+
+\clearpage
+\color{Blue}{\section{Formal Analysis Using Alloy}}
+\label{sect:alloy}
+\input{Files/alloy}
+
+\clearpage
+\color{Blue}{\section{Effort Spent}}
+\label{sect:effort}
+\input{Files/effort}
+
+\clearpage
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain}
+\bibliography{main}
+
+\end{document}
