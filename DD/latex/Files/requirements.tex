@@ -1,0 +1,208 @@
+\rmtab{
+\textbf{Login}\newline
+[R1] The system must allow students to log-in through their academic email and password, if they provide them correctly.\newline
+[R2] Only students with an academic credential provided by a registered university can log-in.
+}{
+WebApp \newline
+AuthenticationManager\newline
+SheerId API\newline
+DAO\newline
+Database
+}
+
+\rmtab{
+\textbf{Edit profile}\newline
+[R3] The system must allow the student to edit his profile info, remove the CV and add a new version of the CV.\newline
+[R4] The student can edit only his profile.
+}{
+WebApp \newline
+AuthenticationManager \newline
+AccountManager \newline
+DAO \newline
+Database
+}
+
+\rmtab{
+\textbf{Internship recommendation}\newline
+[R5] The system must send an email to the student when an internship that might interest him
+becomes available.
+}{
+Affinity Analyzer\newline
+DAO\newline
+Database\newline
+Notification Manager\newline
+Mail Service
+}
+
+\rmtab{
+\textbf{Search an internship}\newline
+[R6] The system must provide to the student all internships satisfying search criteria.\newline
+[R7] The system must provide to the student only internships satisfying search criteria.
+}{
+WebApp\newline
+Internship Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Apply for an internship}\newline
+[R8] The system must register the student’s application for the internship.\newline
+[R9] The system must register only applications of students who have submitted an application for
+the internship.
+}{
+WebApp\newline
+Internship Manager\newline
+DAO\newline
+Database
+}\rmtab{
+\textbf{Answer interview questions}\newline
+[R10] The student must be able to answer interview questionnaires.\newline
+[R11] The student can answer interview questionnaires regarding only internships he’s applied for
+and accepted by the involved company.
+}{
+WebApp\newline
+Contract Manager\newline
+Interview Manager\newline
+DAO\newline
+Database
+}\rmtab{
+\textbf{Consulting CV suggestion}\newline
+[R12] The student must be able to view suggestions on how to improve his CV.\newline
+[R13] The student can view suggestions regarding only his CV.
+}{
+CV Analyzer\newline
+Notification Manager\newline
+Mail Service\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Registration and login}\newline
+[R14] The system must allow companies to register to S\&C providing mandatory data (name, email,
+VAT number) and selecting a password.\newline
+[R15] The system must allow registered companies to log-in through their email and password, if they are provided correctly.
+}{
+WebApp\newline
+Authentication Manager\newline
+DAO\newline
+Database
+}\rmtab{
+\textbf{Upload an internship}\newline
+[R16] The system must allow the company to fill an internship creation form.\newline
+[R17] The system must allow the company to select the internship type.\newline
+[R18] The system must allow the company to select the internship duration.\newline
+[R19] The system must allow the company to select if the internship is paid or not.\newline
+[R20] The system must allow the company to select the skills it is searching for in the candidates.
+}{
+WebApp\newline
+Internship Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Student recommendation}\newline
+[R21] The system must send an email notifying the company when a student with a CV corresponding
+to their needs becomes available.
+}{
+Mail Service\newline
+Notification Manager\newline
+Affinity Analyzer\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Interview students}\newline
+[R22] The company must be able to provide structured questionnaires to students.\newline
+[R23] The company can provide structured questionnaires only to students who have applied to an internship uploaded by the company itself.\newline
+[R24] The company must be able to view answers to questionnaires it created.
+}{
+WebApp\newline
+Contract Manager\newline
+Interview Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Create contract}\newline
+[R25] The company must be able to register a contract regarding an internship and referring to the assigned student.\newline
+[R26] The company can register contracts regarding only internships uploaded by the company itself. \newline
+[R27] The company can register contracts referring only to students that have applied for the indicated internship.
+}{
+WebApp\newline
+Contract Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Login}\newline
+[R28] The system must allow registered universities to log-in through credentials provided by S\&C,
+if they are provided correctly.
+}{
+WebApp\newline
+Authentication Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Terminate an internship}\newline
+[R29] The system must allow universities to terminate an internship involving their students.
+}{
+WebApp\newline
+Contract Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Leave a feedback}\newline
+[R30] The student must be able to post feedback.\newline
+[R31] The company must be able to post feedback.\newline
+[R32] Only students that have participated in an internship can leave feedback for it.\newline
+[R33] Only companies that have participated in an internship can leave feedback for it.\newline
+[R34] Every student can leave at most one feedback per internship.\newline
+[R35] Every company can leave at most one feedback per internship.\newline
+}{
+WebApp\newline
+Contract Manager\newline
+Feedback Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Open discussion}\newline
+[R36] The student must be able to open a discussion with the company he’s interning with and the
+university he’s enrolled at.\newline
+[R37] The company must be able to open a discussion with the students they are collaborating with
+and universities those students are enrolled at.\newline
+[R38] The student can open a discussion only with the company he’s interning with and the university
+he’s enrolled at.\newline
+[R39] The company can open a discussion only with students they are collaborating with and universities.
+}{
+WebApp\newline
+Contract Manager\newline
+Discussion Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Send and receive messages within a discussion}\newline
+[R40] The student can send and receive messages only from a discussion he is participating in.\newline
+[R41] The company can send and receive messages only from a discussion it is participating in.\newline
+[R42] The university can send and receive messages only from a discussion it is participating in.
+}{
+WebApp\newline
+Contract Manager\newline
+Discussion Manager\newline
+DAO\newline
+Database
+}
+\rmtab{
+\textbf{Monitor the status of the internship}\newline
+[R43] The student must be able to monitor the status of the internships in which he has applied.\newline
+[R44] The company must be able to monitor the status of the internships it has published.\newline
+[R45] The university must be able to monitor the status of the internship in which its students have applied.
+}{
+WebApp\newline
+Contract Manager\newline
+DAO\newline
+Database
+}
